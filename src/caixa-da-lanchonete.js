@@ -21,7 +21,11 @@ class CompraSimples {
     compraDebito() {
         const numeroString = this.resultado.toFixed(2);
         const numeroFormatado = numeroString.replace('.', ',');
-        return `R$ ${numeroFormatado}`
+        if (numeroFormatado === '0,00') {
+            return "Quantidade inválida!"
+        } else {
+            return `R$ ${numeroFormatado}`
+        }
     }
 
     compraDinheiro() {
@@ -30,7 +34,12 @@ class CompraSimples {
         const valorComDesconto = this.resultado - valorDesconto;
         const numeroString = valorComDesconto.toFixed(2);
         const numeroFormatado = numeroString.replace('.', ',');
-        return `R$ ${numeroFormatado}`
+        if (numeroFormatado === '0,00') {
+            return "Quantidade inválida!"
+        } else {
+            return `R$ ${numeroFormatado}`
+        }
+
     }
 
     compraCredito() {
@@ -38,7 +47,11 @@ class CompraSimples {
         const valorAcrescimo = (this.resultado * acrescimoPercentual) / 100;
         const numeroString = (this.resultado + valorAcrescimo).toFixed(2);
         const numeroFormatado = numeroString.replace('.', ',');
-        return `R$ ${numeroFormatado}`
+        if (numeroFormatado === '0,00') {
+            return "Quantidade inválida!"
+        } else {
+            return `R$ ${numeroFormatado}`
+        }
     }
 }
 
@@ -74,8 +87,8 @@ class CaixaDaLanchonete {
 
 }
 
-/* const result = new CaixaDaLanchonete;
+const result = new CaixaDaLanchonete;
 
-console.log(result.calcularValorDaCompra('dinheiro', ['cafe,1'])) */
+console.log(result.calcularValorDaCompra('dinheiro', ['cafe,1']))
 
 export { CaixaDaLanchonete };
