@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>116/116</span>
+                <span class='fraction'>113/113</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">74.35% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>29/39</span>
+                <span class='fraction'>28/35</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>116/116</span>
+                <span class='fraction'>113/113</span>
             </div>
         
             
@@ -176,10 +176,7 @@
 <a name='L111'></a><a href='#L111'>111</a>
 <a name='L112'></a><a href='#L112'>112</a>
 <a name='L113'></a><a href='#L113'>113</a>
-<a name='L114'></a><a href='#L114'>114</a>
-<a name='L115'></a><a href='#L115'>115</a>
-<a name='L116'></a><a href='#L116'>116</a>
-<a name='L117'></a><a href='#L117'>117</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L114'></a><a href='#L114'>114</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -221,8 +218,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
@@ -237,10 +233,8 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
@@ -304,7 +298,7 @@
     salgado: { valor: '7,25' }
 };
 &nbsp;
-  class CompraSimples {
+class CompraSimples {
     constructor(metodoDePagamento, string) {
         this.pedido = string;
         this.formaDePagamento = metodoDePagamento;
@@ -316,7 +310,7 @@
     }
 &nbsp;
     checkItem() {
-        const checkItem = this.pedido.every((e) =&gt; e.replace(/[^a-z]/g, '') !== '') 
+        const checkItem = this.pedido.every((e) =&gt; e.replace(/[^a-z]/g, '') !== '')
         return checkItem;
     }
 &nbsp;
@@ -326,17 +320,16 @@
         this.pedido.forEach((e) =&gt; {
             let quantidade = e.replace(/[^0-9]/g, '');
             let produto = e.replace(/[^a-z]/g, '');
-                let preco = TabelaDePrecos[produto].valor
-                let numeroDecimal = parseFloat(preco.replace(',', '.'));
-                let resultado = numeroDecimal * quantidade;
-                total += resultado
+            let preco = TabelaDePrecos[produto].valor
+            let numeroDecimal = parseFloat(preco.replace(',', '.'));
+            let resultado = numeroDecimal * quantidade;
+            total += resultado
         })
         return total;
     }
 &nbsp;
     compraDebito() {
         const calculaItemVezesQuantidade = this.calculaItemVezesQuantidade()
-        if(typeof(calculaItemVezesQuantidade) == 'string') <span class="branch-0 cbranch-no" title="branch not covered" >return calculaItemVezesQuantidade;</span>
         const decimal = calculaItemVezesQuantidade.toFixed(2)
         const numeroFormatado = decimal.replace('.', ',');
         if (numeroFormatado == '0,00') <span class="branch-0 cbranch-no" title="branch not covered" >return "Quantidade inválida!"</span>
@@ -345,7 +338,6 @@
 &nbsp;
     compraDinheiro() {
         const calculaItemVezesQuantidade = this.calculaItemVezesQuantidade()
-        if(typeof(calculaItemVezesQuantidade) == 'string') <span class="branch-0 cbranch-no" title="branch not covered" >return calculaItemVezesQuantidade;</span>
         const descontoPercentual = 5;
         const valorDesconto = (calculaItemVezesQuantidade * descontoPercentual) / 100;
         const valorComDesconto = calculaItemVezesQuantidade - valorDesconto;
@@ -357,7 +349,6 @@
 &nbsp;
     compraCredito() {
         const calculaItemVezesQuantidade = this.calculaItemVezesQuantidade()
-        if(typeof(calculaItemVezesQuantidade) == 'string') <span class="branch-0 cbranch-no" title="branch not covered" >return calculaItemVezesQuantidade;</span>
         const acrescimoPercentual = 3;
         const valorAcrescimo = (calculaItemVezesQuantidade * acrescimoPercentual) / 100;
         const numeroString = (calculaItemVezesQuantidade + valorAcrescimo).toFixed(2);
@@ -418,7 +409,7 @@ export { CaixaDaLanchonete };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-08-16T13:17:37.777Z
+                at 2023-08-16T13:30:37.259Z
             </div>
         <script src="prettify.js"></script>
         <script>

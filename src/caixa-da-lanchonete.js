@@ -7,7 +7,7 @@ const TabelaDePrecos = {
     salgado: { valor: '7,25' }
 };
 
-  class CompraSimples {
+class CompraSimples {
     constructor(metodoDePagamento, string) {
         this.pedido = string;
         this.formaDePagamento = metodoDePagamento;
@@ -19,7 +19,7 @@ const TabelaDePrecos = {
     }
 
     checkItem() {
-        const checkItem = this.pedido.every((e) => e.replace(/[^a-z]/g, '') !== '') 
+        const checkItem = this.pedido.every((e) => e.replace(/[^a-z]/g, '') !== '')
         return checkItem;
     }
 
@@ -29,17 +29,16 @@ const TabelaDePrecos = {
         this.pedido.forEach((e) => {
             let quantidade = e.replace(/[^0-9]/g, '');
             let produto = e.replace(/[^a-z]/g, '');
-                let preco = TabelaDePrecos[produto].valor
-                let numeroDecimal = parseFloat(preco.replace(',', '.'));
-                let resultado = numeroDecimal * quantidade;
-                total += resultado
+            let preco = TabelaDePrecos[produto].valor
+            let numeroDecimal = parseFloat(preco.replace(',', '.'));
+            let resultado = numeroDecimal * quantidade;
+            total += resultado
         })
         return total;
     }
 
     compraDebito() {
         const calculaItemVezesQuantidade = this.calculaItemVezesQuantidade()
-        if(typeof(calculaItemVezesQuantidade) == 'string') return calculaItemVezesQuantidade;
         const decimal = calculaItemVezesQuantidade.toFixed(2)
         const numeroFormatado = decimal.replace('.', ',');
         if (numeroFormatado == '0,00') return "Quantidade inválida!"
@@ -48,7 +47,6 @@ const TabelaDePrecos = {
 
     compraDinheiro() {
         const calculaItemVezesQuantidade = this.calculaItemVezesQuantidade()
-        if(typeof(calculaItemVezesQuantidade) == 'string') return calculaItemVezesQuantidade;
         const descontoPercentual = 5;
         const valorDesconto = (calculaItemVezesQuantidade * descontoPercentual) / 100;
         const valorComDesconto = calculaItemVezesQuantidade - valorDesconto;
@@ -60,7 +58,6 @@ const TabelaDePrecos = {
 
     compraCredito() {
         const calculaItemVezesQuantidade = this.calculaItemVezesQuantidade()
-        if(typeof(calculaItemVezesQuantidade) == 'string') return calculaItemVezesQuantidade;
         const acrescimoPercentual = 3;
         const valorAcrescimo = (calculaItemVezesQuantidade * acrescimoPercentual) / 100;
         const numeroString = (calculaItemVezesQuantidade + valorAcrescimo).toFixed(2);
