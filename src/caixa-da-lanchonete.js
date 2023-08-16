@@ -7,53 +7,69 @@ const TabelaDePrecos = {
     salgado: { valor: '7,25' }
 };
 
-class CompraSimples {
+  class CompraSimples {
     constructor(metodoDePagamento, string) {
-        this.tabelaDePrecos = TabelaDePrecos;
+        this.pedido = string;
         this.formaDePagamento = metodoDePagamento;
-        this.quantidade = string[0].replace(/[^0-9]/g, '');
-        this.produto = string[0].replace(/[^a-z]/g, '')
-        this.preco = TabelaDePrecos[this.produto].valor
-        this.numeroDecimal = parseFloat(this.preco.replace(',', '.'));
-        this.resultado = this.numeroDecimal * this.quantidade;
+    }
+
+    checkQuantidade() {
+        const Quantidade = this.pedido.every((e) => e.replace(/[^0-9]/g, '') !== '0')
+        return Quantidade
+    }
+
+    checkItem() {
+        const checkItem = this.pedido.every((e) => e.replace(/[^a-z]/g, '') !== '') 
+        return checkItem;
+    }
+
+    calculaItemVezesQuantidade() {
+        let total = 0;
+
+        this.pedido.forEach((e) => {
+            let quantidade = e.replace(/[^0-9]/g, '');
+            let produto = e.replace(/[^a-z]/g, '');
+                let preco = TabelaDePrecos[produto].valor
+                let numeroDecimal = parseFloat(preco.replace(',', '.'));
+                let resultado = numeroDecimal * quantidade;
+                total += resultado
+        })
+        return total;
     }
 
     compraDebito() {
-        const numeroString = this.resultado.toFixed(2);
-        const numeroFormatado = numeroString.replace('.', ',');
-        if (numeroFormatado === '0,00') {
-            return "Quantidade inválida!"
-        } else {
-            return `R$ ${numeroFormatado}`
-        }
+        const calculaItemVezesQuantidade = this.calculaItemVezesQuantidade()
+        if(typeof(calculaItemVezesQuantidade) == 'string') return calculaItemVezesQuantidade;
+        const decimal = calculaItemVezesQuantidade.toFixed(2)
+        const numeroFormatado = decimal.replace('.', ',');
+        if (numeroFormatado == '0,00') return "Quantidade inválida!"
+        return `R$ ${numeroFormatado}`
     }
 
     compraDinheiro() {
+        const calculaItemVezesQuantidade = this.calculaItemVezesQuantidade()
+        if(typeof(calculaItemVezesQuantidade) == 'string') return calculaItemVezesQuantidade;
         const descontoPercentual = 5;
-        const valorDesconto = (this.resultado * descontoPercentual) / 100;
-        const valorComDesconto = this.resultado - valorDesconto;
+        const valorDesconto = (calculaItemVezesQuantidade * descontoPercentual) / 100;
+        const valorComDesconto = calculaItemVezesQuantidade - valorDesconto;
         const numeroString = valorComDesconto.toFixed(2);
         const numeroFormatado = numeroString.replace('.', ',');
-        if (numeroFormatado === '0,00') {
-            return "Quantidade inválida!"
-        } else {
-            return `R$ ${numeroFormatado}`
-        }
-
+        if (numeroFormatado == '0,00') return "Quantidade inválida!"
+        return `R$ ${numeroFormatado}`
     }
 
     compraCredito() {
+        const calculaItemVezesQuantidade = this.calculaItemVezesQuantidade()
+        if(typeof(calculaItemVezesQuantidade) == 'string') return calculaItemVezesQuantidade;
         const acrescimoPercentual = 3;
-        const valorAcrescimo = (this.resultado * acrescimoPercentual) / 100;
-        const numeroString = (this.resultado + valorAcrescimo).toFixed(2);
+        const valorAcrescimo = (calculaItemVezesQuantidade * acrescimoPercentual) / 100;
+        const numeroString = (calculaItemVezesQuantidade + valorAcrescimo).toFixed(2);
         const numeroFormatado = numeroString.replace('.', ',');
-        if (numeroFormatado === '0,00') {
-            return "Quantidade inválida!"
-        } else {
-            return `R$ ${numeroFormatado}`
-        }
+        if (numeroFormatado == '0,00') return "Quantidade inválida!"
+        return `R$ ${numeroFormatado}`
     }
 }
+
 
 
 
@@ -68,18 +84,24 @@ class CaixaDaLanchonete {
             return "Não há itens no carrinho de compra!";
         }
 
-        if (itens.length == 1 && metodoDePagamento === 'debito') {
+        if (itens.length >= 1 && metodoDePagamento === 'debito') {
             const resultado = new CompraSimples(metodoDePagamento, itens)
+            if (resultado.checkItem() == false) return "Item inválido!"
+            if (resultado.checkQuantidade() == false) return 'Quantidade inválida!'
             return resultado.compraDebito()
         }
 
-        if (itens.length == 1 && metodoDePagamento === 'dinheiro') {
+        if (itens.length >= 1 && metodoDePagamento === 'dinheiro') {
             const resultado = new CompraSimples(metodoDePagamento, itens)
+            if (resultado.checkItem() == false) return "Item inválido!"
+            if (resultado.checkQuantidade() == false) return 'Quantidade inválida!'
             return resultado.compraDinheiro()
         }
 
-        if (itens.length == 1 && metodoDePagamento === 'credito') {
+        if (itens.length >= 1 && metodoDePagamento === 'credito') {
             const resultado = new CompraSimples(metodoDePagamento, itens)
+            if (resultado.checkItem() == false) return "Item inválido!"
+            if (resultado.checkQuantidade() == false) return 'Quantidade inválida!'
             return resultado.compraCredito()
         }
 
@@ -87,8 +109,8 @@ class CaixaDaLanchonete {
 
 }
 
-const result = new CaixaDaLanchonete;
+/* const result = new CaixaDaLanchonete;
 
-console.log(result.calcularValorDaCompra('dinheiro', ['cafe,1']))
+console.log(result.calcularValorDaCompra('dinheiro', ['cafe,1', 'salgado,1'])) */
 
 export { CaixaDaLanchonete };
